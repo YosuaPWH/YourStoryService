@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  nginx:
+    container_name: nginx_service
+    image: nginx:alpine
+    ports:
+      - "8081:80"
+    depends_on:
+      - app
+    volumes:
+      - ./src:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+    
+
+  app:
+    container_name: YourStoryService
+    build: 
+      context: ./php
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/var/www
+    ports:
+      - "10000:10000"
+    working_dir: /var/www
